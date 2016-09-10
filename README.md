@@ -9,3 +9,6 @@ Sample Project using Spring Data , Hibernate , Restful Web Services and AngularJ
 MySql is used as database. Database installation scripts are at INSTALLATION.sql file.
 
 This project developed with Spring Boot.
+
+http://localhost:8080/   is the home page, link are provided at home page.
+Main method in Application.java can be run to test project, Spring Boot has built-in  Tomcat 8.

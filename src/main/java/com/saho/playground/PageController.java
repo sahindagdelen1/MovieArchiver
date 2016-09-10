@@ -12,8 +12,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class PageController {
 
 
-    @RequestMapping(value = "/home", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public String homepage() {
+        return "home";
+    }
+
+
+    @RequestMapping(value = "/crud", method = RequestMethod.GET)
+    public String crudpage() {
         return "index";
     }
 
