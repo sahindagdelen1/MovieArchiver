@@ -11,7 +11,7 @@
         movieAppSearch.controller("MovieSController", [ '$scope', '$resource',
             function($scope, $resource) {
                   $scope.searchMovie = function(){
-                    var titlep =$scope.moviesearch.title;
+                      var titlep =$scope.moviesearch.title;
                       var directorp =$scope.moviesearch.director;
                       var MovieSearchByTitle = $resource('/movies/findByTitleIgnoreCaseContaining');
                       var MovieSearchByDirector = $resource('/movies/findByDirectorIgnoreCaseContaining');
