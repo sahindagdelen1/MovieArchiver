@@ -6,48 +6,46 @@
     <script>
 
 
-        var movieApp = angular.module("movieApp", [ 'ngResource' ]);
+        var movieApp = angular.module("movieApp", ['ngResource']);
 
-        movieApp.controller("MovieController", [ '$scope', '$resource',
-            function($scope, $resource) {
+        movieApp.controller("MovieController", ['$scope', '$resource',
+            function ($scope, $resource) {
                 var Movies = $resource('/moviegenres');
 
                 var MovieGet = $resource('/moviegenres/:id');
-                $scope.deleteMovie = function(id){
-                    var MovieDelete = $resource('/moviegenres/delete/'+id);
-                    MovieDelete.delete(function(response){
-                        $scope.message=response.message;
+                $scope.deleteMovie = function (id) {
+                    var MovieDelete = $resource('/moviegenres/delete/' + id);
+                    MovieDelete.delete(function (response) {
+                        $scope.message = response.message;
                         location.reload();
 
-                    }) ;
-                 }
+                    });
+                }
 
 
-
-                $scope.editMovie = function(idp,genretextp){
+                $scope.editMovie = function (idp, genretextp) {
                     // var movie = MovieGet.get({ id:id }); http://plnkr.co/edit/2UFfaG?p=preview
 
                     return $resource('/moviegenres/edit/:id/:genretext', null,
                             {
-                                'update': { method:'PUT' }
-                            }).update({ id:idp,genretext:genretextp },null);
+                                'update': {method: 'PUT'}
+                            }).update({id: idp, genretext: genretextp}, null);
                 }
 
 
-
-                $scope.newMovie  =function(){
-                    var genreP=$scope.genrem;
-                    var MoviesSave = $resource('/moviegenres/create/'+genreP);
-                    MoviesSave.save(function(response){
-                        $scope.message=response.message;
+                $scope.newMovie = function () {
+                    var genreP = $scope.genrem;
+                    var MoviesSave = $resource('/moviegenres/create/' + genreP);
+                    MoviesSave.save(function (response) {
+                        $scope.message = response.message;
                         location.reload();
-                    }) ;
+                    });
                 }
 
-                Movies.query(function(genres){
+                Movies.query(function (genres) {
                     $scope.genres = genres;
                 });
-            } ]);
+            }]);
 
     </script>
 
@@ -56,10 +54,13 @@
 <!-- Default panel contents -->
 <div class="panel-heading"><span class="lead"> List of Genres </span></div>
 <div id="recordlist" ng-controller="MovieController">
-    <div><span  style="color:navy"> {{message}}</span></div>
+    <div><span style="color:navy"> {{message}}</span></div>
     <ul ng-repeat="genre in genres">
         <li>
-            <span ng-hide="editing" ng-click="editing = true"   ng-mouseover="infomessage=' | Click to edit or delete'"  ng-mouseleave="infomessage=''">{{genre.genreText}}   <span style="color: chocolate">{{infomessage}}</span> </span>
+            <span ng-hide="editing" ng-click="editing = true" ng-mouseover="infomessage=' | Click to edit or delete'"
+                  ng-mouseleave="infomessage=''">{{genre.genreText}}   <span
+                    style="color: chocolate">{{infomessage}}</span> </span>
+
             <form ng-show="editing" ng-submit="editing = false">
                 <label>Genre:</label>
                 <input type="text" ng-model="genre.genreText" placeholder="Title" ng-required="true"/>

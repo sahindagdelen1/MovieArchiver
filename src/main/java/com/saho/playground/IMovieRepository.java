@@ -7,10 +7,10 @@ import java.util.List;
 
 /**
  * Created by sahin.dagdelen on 7/24/2016.
- *
+ * <p/>
  * http://docs.spring.io/spring-data/jpa/docs/1.5.1.RELEASE/reference/html/jpa.repositories.html#jpa.query-methods.query-creation
  */
-public interface IMovieRepository extends CrudRepository<Movie,Long> {
+public interface IMovieRepository extends CrudRepository<Movie, Long> {
     List<Movie> findByYearLessThan(int year);
 
     List<Movie> findByTitleIgnoreCase(String title);

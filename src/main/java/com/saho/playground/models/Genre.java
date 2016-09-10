@@ -1,12 +1,10 @@
 package com.saho.playground.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -14,7 +12,7 @@ import java.util.Set;
  */
 
 @Entity
-@Table(name ="genre" )
+@Table(name = "genre")
 public class Genre implements Serializable {
 
 
@@ -25,20 +23,20 @@ public class Genre implements Serializable {
     @Column(name = "genretext")
     private String genreText;
 
-    @ManyToMany(mappedBy = "genres",fetch = FetchType.LAZY)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
+    @ManyToMany(mappedBy = "genres", fetch = FetchType.LAZY)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private Set<Movie> movies;
 
 
-    public Genre(){
-      }
+    public Genre() {
+    }
 
-    public Genre(String genreText){
+    public Genre(String genreText) {
         this.genreText = genreText;
     }
 
-    public Genre(long id , String genreText){
-        this.id=id;
+    public Genre(long id, String genreText) {
+        this.id = id;
         this.genreText = genreText;
     }
 

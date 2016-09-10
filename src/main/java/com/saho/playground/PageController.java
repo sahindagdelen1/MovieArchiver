@@ -12,26 +12,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class PageController {
 
 
-    @RequestMapping(value = "/home",method = RequestMethod.GET)
-    public String homepage(){
+    @RequestMapping(value = "/home", method = RequestMethod.GET)
+    public String homepage() {
         return "index";
     }
 
 
-    @RequestMapping(value = "/genre",method = RequestMethod.GET)
-    public String genreEntry(){
+    @RequestMapping(value = "/genre", method = RequestMethod.GET)
+    public String genreEntry() {
         return "genre";
     }
 
 
-    @RequestMapping(value = "/search",method = RequestMethod.GET)
-    public String searchPage(){
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public String searchPage() {
         return "searchform";
     }
 
 
-    @RequestMapping(value = "/error",method = RequestMethod.GET)
-    public String errorPage(){
+    @RequestMapping(value = "/error", method = RequestMethod.GET)
+    public String errorPage() {
         return "error";
     }
 }

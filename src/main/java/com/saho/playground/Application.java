@@ -11,9 +11,6 @@ import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * Created by sahin.dagdelen on 7/24/2016.
  */
@@ -21,12 +18,12 @@ import java.util.Set;
 @SpringBootApplication
 public class Application extends WebMvcConfigurerAdapter {
 
-    static final Logger logger= LogManager.getLogger(Application.class);
+    static final Logger logger = LogManager.getLogger(Application.class);
 
     public static void main(String[] args) {
         logger.info("Application starting.....");
-       SpringApplication.run(Application.class,args);
-     }
+        SpringApplication.run(Application.class, args);
+    }
 
     @Bean
     public ViewResolver viewResolver() {
