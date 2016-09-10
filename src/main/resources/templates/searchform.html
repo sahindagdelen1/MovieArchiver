@@ -1,0 +1,53 @@
+<html>
+<head>
+    <title>Movie Search</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-resource.js"></script>
+    <script>
+
+
+        var movieAppSearch = angular.module("movieAppSearch", [ 'ngResource' ]);
+
+        movieAppSearch.controller("MovieSController", [ '$scope', '$resource',
+            function($scope, $resource) {
+                  $scope.searchMovie = function(){
+                    var titlep =$scope.moviesearch.title;
+                      var directorp =$scope.moviesearch.director;
+                      var MovieSearchByTitle = $resource('/movies/findByTitleIgnoreCaseContaining');
+                      var MovieSearchByDirector = $resource('/movies/findByDirectorIgnoreCaseContaining');
+                      if(titlep.length>0){
+                            $scope.searchresults= MovieSearchByTitle.query({title:titlep});
+                      }else if (directorp.length>0){
+                             $scope.searchresults= MovieSearchByDirector.query({director:directorp});
+                      }
+
+                 }
+          } ]);
+
+    </script>
+
+</head>
+<body ng-app="movieAppSearch" class="ng-cloak">
+<div id="list" ng-controller="MovieSController">
+<form ng-submit="searchMovie()">
+    <label>Search By Title :</label>
+    <input type="text" ng-model="moviesearch.title" placeholder="Title" />
+    <label>Search By Director :</label>
+    <input type="text" ng-model="moviesearch.director" placeholder="Director" />
+    <button class="btn" type="submit">Search</button>
+</form>
+<br/>
+<label><b>Search Results</b></label>
+    <br/>
+    <ul>
+        <li ng-repeat="movie in searchresults | orderBy :movie.title| limitTo:100">
+          {{movie.title}} --    {{movie.year}}  --    {{movie.rating}} --    {{movie.director}}
+        </li>
+     </ul>
+
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,150 @@
+<html>
+<head>
+    <title>Movie List</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-resource.js"></script>
+    <script>
+
+
+        var movieApp = angular.module("movieApp", [ 'ngResource' ]);
+
+             movieApp.controller("MovieController", [ '$scope', '$resource',
+            function($scope, $resource) {
+                var Movies = $resource('/movies');
+                var GenreList = $resource('/moviegenres');
+
+                var MovieGet = $resource('/movies/:id');
+                $scope.deleteMovie = function(id){
+                      var MovieDelete = $resource('/movies/delete/'+id);
+                      MovieDelete.delete(function(response){
+                        $scope.message=response.message;
+                          location.reload();
+
+                    }) ;
+
+                }
+
+                $scope.editMovie = function(movie){
+                     var dataObject4Edit = {
+                        title : movie.title,
+                        rating: movie.rating,
+                        director: movie.director,
+                        genre: [
+                            { id: movie.genre.id,genreText:movie.genre.genreText }
+                        ]
+                    };
+
+                    return $resource('/movies/edit', null,
+                            {
+                                'update': { method:'PUT' }
+                            }).update(dataObject4Edit,movie);
+                  }
+
+
+
+                $scope.newMovie  =function(){
+                    var MoviesSave = $resource('/movies/create');
+                    var dataObject = {
+                        title :$scope.moviec.titlem,
+                         year:$scope.moviec.yearm,
+                        rating:$scope.moviec.ratingm,
+                        director:$scope.moviec.directorm,
+                       genres: [
+                           { id:$scope.moviec.genrem.id,genreText:$scope.moviec.genrem.genreText }
+                        ]
+                      };
+
+
+
+                    MoviesSave.save(dataObject,function(response){
+                        $scope.message=response.message;
+                        location.reload();
+                    })
+
+                 }
+
+
+
+
+                  Movies.query(function(movies){
+                    $scope.movies = movies;
+                  });
+
+
+                GenreList.query(function(genres){
+                    $scope.genres = genres;
+                });
+
+         } ]);
+
+        $scope.go = function ( path ) {
+            $location.path( path );
+        };
+    </script>
+
+</head>
+<body ng-app="movieApp" class="ng-cloak">
+
+<br/>
+
+       <!-- Default panel contents -->
+      <div class="panel-heading"><span class="lead"> List of Movies </span></div>
+         <div id="recordlist" ng-controller="MovieController">
+             <div><span  style="color:navy"> {{message}}</span></div>
+                     <ul ng-repeat="movie in movies">
+                            <li>
+                                <span ng-hide="editing" ng-click="editing = true"   ng-mouseover="infomessage=' | Click to edit or delete'"  ng-mouseleave="infomessage=''">{{movie.title}} | {{movie.year}}   <span style="color: chocolate">{{infomessage}}</span> </span>
+                                <form ng-show="editing" ng-submit="editMovie(movie);editing = false;">
+                                    <label>Name:</label>
+                                    <input type="text" ng-model="movie.title" placeholder="Title" ng-required="true"/>
+                                    <label>Year:</label>
+                                    <input type="text" ng-model="movie.year" placeholder="Year" ng-required="true"/>
+                                    <br/>
+                                    <label>Director:</label>
+                                    <input type="text" ng-model="movie.director" placeholder="Director" ng-required="true"/>
+                                    <br/>
+                                    <label>Rating :</label>
+                                    <input type="text" ng-model="movie.rating" placeholder="Rating 1 - 10" ng-required="true"/>
+                                    <br/>
+                                    <label>Genre :  {{movie.genres[0].genreText}}</label>
+                                    <select size="10"     ng-model="movie.genre"  ng-options="genre as genre.genreText for genre in genres">
+                                    </select>
+                                    <button class="btn" type="submit">Edit</button>
+                                    <button class="btn" type="button" ng-click="deleteMovie(movie.id)">Delete</button>
+                                    <br />
+                                </form>
+                            </li>
+                      </ul>
+
+
+             <form ng-show="visible" ng-submit="newMovie()">
+                 <label>Title:</label>
+                 <input type="text" ng-model="moviec.titlem" placeholder="Name" ng-required="true"/>
+                 <label>Year:</label>
+                 <input type="text" ng-model="moviec.yearm" placeholder="Year" ng-required="true"/>
+                 <br/>
+                 <label>Director:</label>
+                 <input type="text" ng-model="moviec.directorm" placeholder="Director" ng-required="true"/>
+                 <br/>
+                 <label>Genre:</label>
+                 <select size="10" name="genreselect"   ng-model="moviec.genrem"  ng-options="genre as genre.genreText for genre in genres">
+                  </select>
+                 <br/>
+                 <label>Rating :</label>
+                 <input type="text" ng-model="moviec.ratingm" placeholder="Rating 1 - 10" ng-required="true"/>
+                 <br/>
+                 <button class="btn" ng-click="visible = false" type="submit">Save</button>
+                 <br />
+             </form>
+         </div>
+
+
+       <div id="footer">
+           <div class="container">
+               <button class="btn" ng-click="visible = true" type="button">New</button>
+            </div>
+       </div>
+
+
+</body>
+</html>

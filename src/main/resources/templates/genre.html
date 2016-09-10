@@ -1,0 +1,92 @@
+<html>
+<head>
+    <title>Movie Genre Entry Page</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-resource.js"></script>
+    <script>
+
+
+        var movieApp = angular.module("movieApp", [ 'ngResource' ]);
+
+        movieApp.controller("MovieController", [ '$scope', '$resource',
+            function($scope, $resource) {
+                var Movies = $resource('/moviegenres');
+
+                var MovieGet = $resource('/moviegenres/:id');
+                $scope.deleteMovie = function(id){
+                    var MovieDelete = $resource('/moviegenres/delete/'+id);
+                    MovieDelete.delete(function(response){
+                        $scope.message=response.message;
+                        location.reload();
+
+                    }) ;
+                 }
+
+
+
+                $scope.editMovie = function(idp,genretextp){
+                    // var movie = MovieGet.get({ id:id }); http://plnkr.co/edit/2UFfaG?p=preview
+
+                    return $resource('/moviegenres/edit/:id/:genretext', null,
+                            {
+                                'update': { method:'PUT' }
+                            }).update({ id:idp,genretext:genretextp },null);
+                }
+
+
+
+                $scope.newMovie  =function(){
+                    var genreP=$scope.genrem;
+                    var MoviesSave = $resource('/moviegenres/create/'+genreP);
+                    MoviesSave.save(function(response){
+                        $scope.message=response.message;
+                        location.reload();
+                    }) ;
+                }
+
+                Movies.query(function(genres){
+                    $scope.genres = genres;
+                });
+            } ]);
+
+    </script>
+
+</head>
+<body ng-app="movieApp" class="ng-cloak">
+<!-- Default panel contents -->
+<div class="panel-heading"><span class="lead"> List of Genres </span></div>
+<div id="recordlist" ng-controller="MovieController">
+    <div><span  style="color:navy"> {{message}}</span></div>
+    <ul ng-repeat="genre in genres">
+        <li>
+            <span ng-hide="editing" ng-click="editing = true"   ng-mouseover="infomessage=' | Click to edit or delete'"  ng-mouseleave="infomessage=''">{{genre.genreText}}   <span style="color: chocolate">{{infomessage}}</span> </span>
+            <form ng-show="editing" ng-submit="editing = false">
+                <label>Genre:</label>
+                <input type="text" ng-model="genre.genreText" placeholder="Title" ng-required="true"/>
+                <br/>
+                <button class="btn" type="submit" ng-click="editMovie(genre.id,genre.genreText)">Save</button>
+                <button class="btn" type="button" ng-click="deleteMovie(genre.id)">X</button>
+            </form>
+        </li>
+    </ul>
+
+
+    <form ng-show="visible" ng-submit="newMovie()">
+        <label>Genre:</label>
+        <input type="text" ng-model="genrem" placeholder="Name" ng-required="true"/>
+        <br/>
+        <button class="btn" ng-click="visible = false" type="submit">Save</button>
+    </form>
+
+</div>
+
+
+<div id="footer">
+    <div class="container">
+        <button class="btn" ng-click="visible = true" type="button">+</button>
+    </div>
+</div>
+
+
+</body>
+</html>
