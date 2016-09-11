@@ -22,6 +22,7 @@
                     }
 
                 }
+
             }]);
 
     </script>
@@ -42,8 +43,9 @@
     <ul>
         <li ng-repeat="movie in searchresults | orderBy :movie.title| limitTo:100">
             {{movie.title}} -- {{movie.year}} -- {{movie.rating}} -- {{movie.director}} -- {{movie.genre}}
-            <a id="imdblink" target="_blank" ng-href="{{movie.imdblink}}"> Click to get more information from Imdb
-                :)</a>
+            <a id="imdblink" target="_blank" ng-href="{{movie.imdblink}}">
+                  <div>{{movie.imdblink.length>0 ? 'Click to get more information from IMDB' : ' No IMDB links found'}}</div>
+                 </a>
         </li>
     </ul>
 
