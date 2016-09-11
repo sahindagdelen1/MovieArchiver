@@ -24,9 +24,7 @@ https://cloud.githubusercontent.com/assets/22118424/18418872/2d6c3b6e-7857-11e6-
 https://cloud.githubusercontent.com/assets/22118424/18418873/2d6f7784-7857-11e6-8bf2-cefdae822774.JPG
 
 https://cloud.githubusercontent.com/assets/22118424/18418874/2d725c6a-7857-11e6-855f-926632a5f4b8.JPG
-
-https://cloud.githubusercontent.com/assets/22118424/18418875/2d753750-7857-11e6-86b4-05635a20cb9f.JPG
-
+ 
 https://cloud.githubusercontent.com/assets/22118424/18418877/2d882586-7857-11e6-8dcc-4f4232001731.jpg
 
 https://cloud.githubusercontent.com/assets/22118424/18418876/2d87007a-7857-11e6-8ff8-f9c89bb9a0be.jpg
