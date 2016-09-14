@@ -16,7 +16,7 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
  */
 
 @SpringBootApplication
-public class Application extends WebMvcConfigurerAdapter {
+public class Application {
 
     static final Logger logger = LogManager.getLogger(Application.class);
 
@@ -25,17 +25,5 @@ public class Application extends WebMvcConfigurerAdapter {
         SpringApplication.run(Application.class, args);
     }
 
-    @Bean
-    public ViewResolver viewResolver() {
-        ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
-        templateResolver.setTemplateMode("XHTML");
-        templateResolver.setSuffix(".html");
-        SpringTemplateEngine engine = new SpringTemplateEngine();
-        engine.setTemplateResolver(templateResolver);
-
-        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
-        viewResolver.setTemplateEngine(engine);
-        return viewResolver;
-    }
 }
 
